@@ -2,19 +2,19 @@ package org.zhurko.library.model;
 
 public class Label {
 
-    private long id;
+    private Long id;
     private String name;
 
     public Label(String name) {
         this.name = name;
     }
 
-    public Label(long id, String name) {
+    public Label(Long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -26,7 +26,7 @@ public class Label {
         this.name = name;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

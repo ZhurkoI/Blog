@@ -5,14 +5,14 @@ import java.util.List;
 
 public class Post {
 
-    private long id;
+    private Long id;
     private String content;
     private Date created;
     private Date updated;
     private List<Label> labels;
     private PostStatus postStatus;
 
-    public Post(long id, String content, Date created, Date updated, List<Label> labels, PostStatus postStatus) {
+    public Post(Long id, String content, Date created, Date updated, List<Label> labels, PostStatus postStatus) {
         this.id = id;
         this.content = content;
         this.created = created;
@@ -21,7 +21,7 @@ public class Post {
         this.postStatus = postStatus;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

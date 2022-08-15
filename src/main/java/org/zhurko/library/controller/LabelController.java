@@ -37,4 +37,8 @@ public class LabelController {
             return null;
         }
     }
+
+    public Label findLabelById(Long id) {
+        return this.repo.getById(id);
+    }
 }

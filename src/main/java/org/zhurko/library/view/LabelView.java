@@ -15,11 +15,12 @@ public class LabelView {
             "1 - Create label",
             "2 - Get all labels",
             "3 - Get label by name",
-            "4 - Delete label by ID",
-            "5 - Edit label"
+            "4 - Get label by ID",
+            "5 - Delete label by ID",
+            "6 - Edit label"
     };
-    Scanner scanner = new Scanner(System.in);
-    LabelController labelController = new LabelController();
+    private final Scanner scanner = new Scanner(System.in);
+    private final LabelController labelController = new LabelController();
 
     public void runMenu() {
         while (true) {
@@ -62,6 +63,16 @@ public class LabelView {
                     }
                     break;
                 case 4:
+                    System.out.print("Enter label ID: ");
+                    numberInput = scanner.nextLong();
+                    label = labelController.findLabelById(numberInput);
+                    if (label != null) {
+                        System.out.println("Label found: " + label);
+                    } else {
+                        System.out.println("Label with ID=" + numberInput + " doesn't exist.");
+                    }
+                    break;
+                case 5:
                     System.out.print("Enter ID of the label you want to remove: ");
                     try {
                         numberInput = scanner.nextLong();
@@ -70,7 +81,7 @@ public class LabelView {
                     }
                     labelController.deleteLabelById(numberInput);
                     break;
-                case 5:
+                case 6:
                     System.out.print("Enter name of the label you want to edit: ");
                     stringInput = scanner.nextLine();
                     label = labelController.findLabelByName(stringInput);

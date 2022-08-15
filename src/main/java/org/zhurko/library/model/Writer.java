@@ -4,19 +4,19 @@ import java.util.List;
 
 public class Writer {
 
-    private long id;
+    private Long id;
     private String firstName;
     private String lastName;
     private List<Post> posts;
 
-    public Writer(long id, String firstName, String lastName, List<Post> posts) {
+    public Writer(Long id, String firstName, String lastName, List<Post> posts) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.posts = posts;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
