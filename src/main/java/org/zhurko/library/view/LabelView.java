@@ -16,8 +16,8 @@ public class LabelView {
             "2 - Get all labels",
             "3 - Get label by name",
             "4 - Get label by ID",
-            "5 - Delete label by ID",
-            "6 - Edit label"
+            "5 - Edit label",
+            "6 - Delete label by ID"
     };
     private final Scanner scanner = new Scanner(System.in);
     private final LabelController labelController = new LabelController();
@@ -73,15 +73,6 @@ public class LabelView {
                     }
                     break;
                 case 5:
-                    System.out.print("Enter ID of the label you want to remove: ");
-                    try {
-                        numberInput = scanner.nextLong();
-                    } catch (InputMismatchException exception) {
-                        System.out.println("Invalid selection. Numbers only please.");
-                    }
-                    labelController.deleteLabelById(numberInput);
-                    break;
-                case 6:
                     System.out.print("Enter name of the label you want to edit: ");
                     stringInput = scanner.nextLine();
                     label = labelController.findLabelByName(stringInput);
@@ -93,6 +84,15 @@ public class LabelView {
                     String stringInput2 = scanner.nextLine();
                     label = labelController.updateLabel(stringInput, stringInput2);
                     System.out.println("Label has been renamed. New name: " + label);
+                    break;
+                case 6:
+                    System.out.print("Enter ID of the label you want to remove: ");
+                    try {
+                        numberInput = scanner.nextLong();
+                    } catch (InputMismatchException exception) {
+                        System.out.println("Invalid selection. Numbers only please.");
+                    }
+                    labelController.deleteLabelById(numberInput);
                     break;
             }
         }
