@@ -41,8 +41,9 @@ public class JsonLabelRepositoryImpl implements LabelRepository {
 
         List<Label> labels = getAllLabelsInternal();
         label.setId(generateId(labels));
-        labels.add(label);
-        writeToFile(labels);
+        List<Label> modifiableListOfLabels = new ArrayList<>(labels);
+        modifiableListOfLabels.add(label);
+        writeToFile(modifiableListOfLabels);
         return label;
     }
 
@@ -104,9 +105,9 @@ public class JsonLabelRepositoryImpl implements LabelRepository {
 
     private Long generateId(List<Label> labels) {
         long maxIndex;
-        Optional<Label> mostRecentLabel = labels.stream().max(Comparator.comparingLong(Label::getId));
-        if (mostRecentLabel.isPresent()) {
-            maxIndex = mostRecentLabel.get().getId();
+        Optional<Label> mostRecentEntry = labels.stream().max(Comparator.comparingLong(Label::getId));
+        if (mostRecentEntry.isPresent()) {
+            maxIndex = mostRecentEntry.get().getId();
         } else {
             maxIndex = 1L;
         }
