@@ -41,7 +41,7 @@ public class MainView {
 
         do {
             System.out.println();
-            System.out.println("Main menu:");
+            System.out.println("Main Menu:");
             System.out.println(mainMenu);
             System.out.print("Please make a selection: ");
             try {

@@ -40,7 +40,7 @@ public class LabelView {
                     if (createdLabel != null) {
                         System.out.println("Label has been created: " + createdLabel);
                     } else {
-                        System.out.println("label '" + stringInput + "' has not been created.");
+                        System.out.println("Label '" + stringInput + "' has not been created.");
                     }
                     break;
                 case 2:

@@ -29,13 +29,7 @@ public class LabelController {
     public Label updateLabel(String existentName, String newName) {
         Label label = this.repo.findByName(existentName);
         label.setName(newName);
-        Label updatedLabel = this.repo.update(label);
-
-        if (updatedLabel != null) {
-            return label;
-        } else {
-            return null;
-        }
+        return this.repo.update(label);
     }
 
     public Label findLabelById(Long id) {

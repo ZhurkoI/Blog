@@ -1,5 +1,7 @@
 package org.zhurko.library.model;
 
+import java.util.Objects;
+
 public class Label {
 
     private Long id;
@@ -33,5 +35,18 @@ public class Label {
     @Override
     public String toString() {
         return name + " (id=" + id + ')';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Label label = (Label) o;
+        return Objects.equals(id, label.id) && Objects.equals(name, label.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
     }
 }

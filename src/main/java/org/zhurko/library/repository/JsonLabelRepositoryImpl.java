@@ -107,7 +107,7 @@ public class JsonLabelRepositoryImpl implements LabelRepository {
         long maxIndex;
         Optional<Label> mostRecentEntry = labels.stream().max(Comparator.comparingLong(Label::getId));
         if (mostRecentEntry.isPresent()) {
-            maxIndex = mostRecentEntry.get().getId();
+            maxIndex = mostRecentEntry.get().getId() + 1L;
         } else {
             maxIndex = 1L;
         }
