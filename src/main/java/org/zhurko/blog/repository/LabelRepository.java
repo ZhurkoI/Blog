@@ -1,6 +1,6 @@
-package org.zhurko.library.repository;
+package org.zhurko.blog.repository;
 
-import org.zhurko.library.model.Label;
+import org.zhurko.blog.model.Label;
 
 public interface LabelRepository extends GenericRepository<Label, Long> {
     Label findByName(String name);

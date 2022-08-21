@@ -1,11 +1,10 @@
-package org.zhurko.library.repository;
+package org.zhurko.blog.repository;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import org.zhurko.library.model.Label;
-import org.zhurko.library.model.Post;
-import org.zhurko.library.model.PostStatus;
+import org.zhurko.blog.model.Post;
+import org.zhurko.blog.model.PostStatus;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -17,7 +16,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class JsonPostRepositoryImpl implements PostRepository {
@@ -65,6 +63,7 @@ public class JsonPostRepositoryImpl implements PostRepository {
             if (p.getId().equals(post.getId())) {
                 p.setContent(post.getContent());
                 p.setUpdated(post.getUpdated());
+                p.setLabels(post.getLabels());
                 p.setPostStatus(post.getPostStatus());
             }
         });
@@ -121,32 +120,5 @@ public class JsonPostRepositoryImpl implements PostRepository {
         } catch (IOException exception) {
             exception.printStackTrace();
         }
-    }
-
-    @Override
-    public Post addLabel(Post post, Label label) {
-        post.addLabel(label);
-        List<Post> posts = getAllPostsInternal();
-        posts.forEach(p -> {
-            if (p.getId().equals(post.getId())) {
-                p.setAllLabels(post.getLabels());
-            }
-        });
-        writeToFile(posts);
-        return post;
-    }
-
-    @Override
-    public Post removeLabel(Post post, Label label) {
-        List<Post> posts = getAllPostsInternal();
-        Set<Label> labels = post.getLabels();
-        labels.remove(label);
-        posts.forEach(p -> {
-            if (p.getId().equals(post.getId())) {
-                p.setAllLabels(labels);
-            }
-        });
-        writeToFile(posts);
-        return post;
     }
 }

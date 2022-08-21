@@ -1,9 +1,10 @@
-package org.zhurko.library.view;
+package org.zhurko.blog.repository.view;
 
-import org.zhurko.library.controller.LabelController;
-import org.zhurko.library.controller.PostController;
-import org.zhurko.library.model.Label;
-import org.zhurko.library.model.Post;
+import org.zhurko.blog.controller.LabelController;
+import org.zhurko.blog.controller.PostController;
+import org.zhurko.blog.model.Label;
+import org.zhurko.blog.model.Post;
+import org.zhurko.blog.util.UserInputReader;
 
 import java.util.Arrays;
 import java.util.InputMismatchException;
@@ -31,7 +32,6 @@ public class PostView {
     public void runMenu() {
         while (true) {
             int choice = getChoice(POST_MENU);
-            Long numberInput = -1L;
 
             switch (choice) {
                 case 0:
@@ -55,30 +55,22 @@ public class PostView {
                     removeLabelFromPost();
                     break;
                 case 7:
-                    removePost(numberInput);
+                    removePost();
                     break;
             }
         }
     }
 
-    private void removePost(Long numberInput) {
+    private void removePost() {
         System.out.print("Enter ID of the post you want to remove: ");
-        try {
-            numberInput = scanner.nextLong();
-        } catch (InputMismatchException exception) {
-            System.out.println("Invalid selection. Numbers only please.");
-        }
+        Long numberInput = UserInputReader.readNumberInput();
         postController.deleteById(numberInput);
     }
 
     private void removeLabelFromPost() {
-        Label label;
-        Long numberInput;
-        Post post;
         System.out.print("Enter ID of the post: ");
-        numberInput = scanner.nextLong();
-        scanner.nextLine();
-        post = postController.findPostById(numberInput);
+        Long numberInput = UserInputReader.readNumberInput();
+        Post post = postController.getPostById(numberInput);
         if (post == null) {
             System.out.println("Post with ID=" + numberInput + " doesn't exist.");
             return;
@@ -92,75 +84,63 @@ public class PostView {
         post.getLabels().forEach(l -> System.out.println("ID=" + l.getId() + " | " + l.getName()));
 
         System.out.print("Enter ID of the label you want to remove: ");
-        numberInput = scanner.nextLong();
-        scanner.nextLine();
-        label = labelController.findLabelById(numberInput);
+        numberInput = UserInputReader.readNumberInput();
+        Label label = labelController.getLabelById(numberInput);
         if (label == null) {
             System.out.println("There is no label with ID=" + numberInput + " assigned to selected post.");
             return;
         }
 
-        post = postController.removeLabel(post, label);
+        post = postController.removeLabel(post.getId(), label.getId());
         System.out.println("Label removed:");
         printPosts(post);
     }
 
     private void addLabelToPost() {
-        Long numberInput;
-        Post post;
         System.out.print("Enter ID of the post: ");
-        numberInput = scanner.nextLong();
-        scanner.nextLine();
-        post = postController.findPostById(numberInput);
+        Long numberInput = UserInputReader.readNumberInput();
+        Post post = postController.getPostById(numberInput);
         if (post == null) {
             System.out.println("Post with ID=" + numberInput + " doesn't exist.");
             return;
         }
 
-        // TODO: Это нормально, когда в PostVew создается LabelController для взаимодействия с лейблами
+        // TODO: Это нормально, когда в PostVew создается LabelController для взаимодействия с лейблами?
         System.out.println("List of available labels:");
         labelController.getAll().forEach(System.out::println);
         System.out.print("Enter ID of the label: ");
-        numberInput = scanner.nextLong();
-        scanner.nextLine();
-        Label label = labelController.findLabelById(numberInput);
+        numberInput = UserInputReader.readNumberInput();
+        Label label = labelController.getLabelById(numberInput);
         if (label == null) {
             System.out.println("Label with ID=" + numberInput + " doesn't exist.");
             return;
         }
 
-        post = postController.addLabel(post, label);
+        post = postController.addLabel(post.getId(), label.getId());
         System.out.println("Label added:");
         printPosts(post);
     }
 
     private void editPost() {
-        Long numberInput;
-        Post post;
-        String stringInput;
         System.out.print("Enter ID of the post you want to edit: ");
-        numberInput = scanner.nextLong();
-        scanner.nextLine();  // to read the '\n' character which is present in console after executing scanner.nextLong()
-        post = postController.findPostById(numberInput);
+        Long numberInput = UserInputReader.readNumberInput();
+        Post post = postController.getPostById(numberInput);
         if (post == null) {
             System.out.println("Post with ID=" + numberInput + " doesn't exist.");
             return;
         }
 
         System.out.print("Enter new content: ");
-        stringInput = scanner.nextLine();
+        String stringInput = scanner.nextLine();
         post = postController.updatePost(post.getId(), stringInput);
         System.out.println("Post with ID=" + post.getId() + " has been updated. New post content: ");
         printPosts(post);
     }
 
     private void getPostById() {
-        Post post;
-        Long numberInput;
         System.out.print("Enter ID of the post: ");
-        numberInput = scanner.nextLong();
-        scanner.nextLine();
-        post = postController.findPostById(numberInput);
+        Long numberInput = UserInputReader.readNumberInput();
+        Post post = postController.getPostById(numberInput);
         if (post != null) {
             System.out.println("Post found:");
             printPosts(post);
@@ -211,7 +191,7 @@ public class PostView {
         return choice;
     }
 
-    private String printListOfLabels(Post post) {
+    private String getAssignedLabels(Post post) {
         if (post.getLabels().isEmpty()) {
             return "<no labels>";
         } else {
@@ -226,7 +206,7 @@ public class PostView {
                 " | CREATED: " + p.getCreated() +
                 " | UPDATED: " + p.getUpdated() +
                 " | STATUS: " + p.getPostStatus() +
-                " | LABELS: " + printListOfLabels(p) +
+                " | LABELS: " + getAssignedLabels(p) +
                 " | CONTENT: " + p.getContent()
         ));
     }
@@ -236,7 +216,7 @@ public class PostView {
                 " | CREATED: " + post.getCreated() +
                 " | UPDATED: " + post.getUpdated() +
                 " | STATUS: " + post.getPostStatus() +
-                " | LABELS: " + printListOfLabels(post) +
+                " | LABELS: " + getAssignedLabels(post) +
                 " | CONTENT: " + post.getContent()
         );
     }

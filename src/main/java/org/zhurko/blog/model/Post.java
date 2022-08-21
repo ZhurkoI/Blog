@@ -1,7 +1,8 @@
-package org.zhurko.library.model;
+package org.zhurko.blog.model;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class Post {
@@ -62,11 +63,7 @@ public class Post {
         return labels;
     }
 
-    public void addLabel(Label label) {
-        this.labels.add(label);
-    }
-
-    public void setAllLabels(Set<Label> labels) {
+    public void setLabels(Set<Label> labels) {
         this.labels = labels;
     }
 
@@ -76,5 +73,20 @@ public class Post {
 
     public void setPostStatus(PostStatus postStatus) {
         this.postStatus = postStatus;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Post post = (Post) o;
+        return Objects.equals(id, post.id) && Objects.equals(content, post.content)
+                && Objects.equals(created, post.created) && Objects.equals(updated, post.updated)
+                && Objects.equals(labels, post.labels) && postStatus == post.postStatus;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, content, created, updated, labels, postStatus);
     }
 }

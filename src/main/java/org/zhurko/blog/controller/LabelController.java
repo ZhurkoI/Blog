@@ -1,8 +1,8 @@
-package org.zhurko.library.controller;
+package org.zhurko.blog.controller;
 
-import org.zhurko.library.model.Label;
-import org.zhurko.library.repository.JsonLabelRepositoryImpl;
-import org.zhurko.library.repository.LabelRepository;
+import org.zhurko.blog.model.Label;
+import org.zhurko.blog.repository.JsonLabelRepositoryImpl;
+import org.zhurko.blog.repository.LabelRepository;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class LabelController {
         return this.repo.update(label);
     }
 
-    public Label findLabelById(Long id) {
+    public Label getLabelById(Long id) {
         return this.repo.getById(id);
     }
 }

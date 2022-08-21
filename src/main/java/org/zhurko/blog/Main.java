@@ -1,6 +1,6 @@
-package org.zhurko.library;
+package org.zhurko.blog;
 
-import org.zhurko.library.view.MainView;
+import org.zhurko.blog.repository.view.MainView;
 
 public class Main {
 

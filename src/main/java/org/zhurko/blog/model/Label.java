@@ -1,4 +1,4 @@
-package org.zhurko.library.model;
+package org.zhurko.blog.model;
 
 import java.util.Objects;
 

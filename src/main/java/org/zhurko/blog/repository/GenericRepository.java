@@ -1,4 +1,4 @@
-package org.zhurko.library.repository;
+package org.zhurko.blog.repository;
 
 import java.util.List;
 

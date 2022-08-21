@@ -1,0 +1,45 @@
+[
+  {
+    "id": 3,
+    "firstName": "vasya",
+    "lastName": "pupkin",
+    "posts": []
+  },
+  {
+    "id": 5,
+    "firstName": "John",
+    "lastName": "Doe",
+    "posts": [
+      {
+        "id": 15,
+        "content": "999 999",
+        "created": "Aug 18, 2022, 10:30:03 PM",
+        "updated": "Aug 18, 2022, 10:32:05 PM",
+        "labels": [
+          {
+            "id": 2,
+            "name": "Poetry"
+          },
+          {
+            "id": 1,
+            "name": "SciFi"
+          }
+        ],
+        "postStatus": "ACTIVE"
+      },
+      {
+        "id": 10,
+        "content": "222223  333333",
+        "created": "Aug 17, 2022, 11:29:02 PM",
+        "updated": "Aug 17, 2022, 11:29:02 PM",
+        "labels": [
+          {
+            "id": 2,
+            "name": "Poetry"
+          }
+        ],
+        "postStatus": "UNDER_REVIEW"
+      }
+    ]
+  }
+]

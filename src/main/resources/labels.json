@@ -1,10 +1,18 @@
 [
   {
     "id": 1,
-    "name": "SciFi"
+    "name": "news"
   },
   {
     "id": 2,
-    "name": "Poetry"
+    "name": "spam"
+  },
+  {
+    "id": 3,
+    "name": "sport"
+  },
+  {
+    "id": 4,
+    "name": "music"
   }
 ]

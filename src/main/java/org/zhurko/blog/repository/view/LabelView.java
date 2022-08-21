@@ -1,7 +1,8 @@
-package org.zhurko.library.view;
+package org.zhurko.blog.repository.view;
 
-import org.zhurko.library.controller.LabelController;
-import org.zhurko.library.model.Label;
+import org.zhurko.blog.controller.LabelController;
+import org.zhurko.blog.model.Label;
+import org.zhurko.blog.util.UserInputReader;
 
 import java.util.Arrays;
 import java.util.InputMismatchException;
@@ -26,7 +27,7 @@ public class LabelView {
         while (true) {
             int choice = getChoice(LABEL_MENU);
             String stringInput;
-            Long numberInput = -1L;
+            Long numberInput;
             Label label;
 
             switch (choice) {
@@ -64,8 +65,8 @@ public class LabelView {
                     break;
                 case 4:
                     System.out.print("Enter label ID: ");
-                    numberInput = scanner.nextLong();
-                    label = labelController.findLabelById(numberInput);
+                    numberInput = UserInputReader.readNumberInput();
+                    label = labelController.getLabelById(numberInput);
                     if (label != null) {
                         System.out.println("Label found: " + label);
                     } else {
@@ -87,11 +88,7 @@ public class LabelView {
                     break;
                 case 6:
                     System.out.print("Enter ID of the label you want to remove: ");
-                    try {
-                        numberInput = scanner.nextLong();
-                    } catch (InputMismatchException exception) {
-                        System.out.println("Invalid selection. Numbers only please.");
-                    }
+                    numberInput = UserInputReader.readNumberInput();
                     labelController.deleteLabelById(numberInput);
                     break;
             }
