@@ -1,4 +1,4 @@
-package org.zhurko.blog.repository.view;
+package org.zhurko.blog.view;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;

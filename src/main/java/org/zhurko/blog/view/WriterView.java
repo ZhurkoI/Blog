@@ -1,4 +1,4 @@
-package org.zhurko.blog.repository.view;
+package org.zhurko.blog.view;
 
 import org.zhurko.blog.controller.PostController;
 import org.zhurko.blog.controller.WriterController;
