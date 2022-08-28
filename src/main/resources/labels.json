@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "name": "news"
+  },
+  {
+    "id": 2,
+    "name": "spam"
+  },
+  {
+    "id": 3,
+    "name": "sport"
+  },
+  {
+    "id": 4,
+    "name": "rock-music"
+  }
+]

@@ -1,0 +1,79 @@
+[
+  {
+    "id": 9,
+    "content": "weqweqw 444",
+    "created": "Aug 17, 2022, 6:52:59 PM",
+    "updated": "Aug 18, 2022, 10:52:22 PM",
+    "labels": [
+      {
+        "id": 2,
+        "name": "Poetry"
+      }
+    ],
+    "postStatus": "DELETED"
+  },
+  {
+    "id": 10,
+    "content": "222223  333333",
+    "created": "Aug 17, 2022, 11:29:02 PM",
+    "updated": "Aug 21, 2022, 12:33:21 PM",
+    "labels": [
+      {
+        "id": 2,
+        "name": "Poetry"
+      }
+    ],
+    "postStatus": "ACTIVE"
+  },
+  {
+    "id": 12,
+    "content": "6666",
+    "created": "Aug 18, 2022, 10:47:32 AM",
+    "updated": "Aug 18, 2022, 10:47:32 AM",
+    "labels": [
+      {
+        "id": 1,
+        "name": "SciFi"
+      }
+    ],
+    "postStatus": "UNDER_REVIEW"
+  },
+  {
+    "id": 13,
+    "content": "777",
+    "created": "Aug 18, 2022, 11:02:15 AM",
+    "updated": "Aug 18, 2022, 11:02:15 AM",
+    "labels": [],
+    "postStatus": "UNDER_REVIEW"
+  },
+  {
+    "id": 14,
+    "content": "999 999 ",
+    "created": "Aug 18, 2022, 11:04:24 AM",
+    "updated": "Aug 18, 2022, 10:51:08 PM",
+    "labels": [
+      {
+        "id": 2,
+        "name": "Poetry"
+      }
+    ],
+    "postStatus": "ACTIVE"
+  },
+  {
+    "id": 15,
+    "content": "999 999",
+    "created": "Aug 18, 2022, 10:30:03 PM",
+    "updated": "Aug 18, 2022, 10:32:05 PM",
+    "labels": [
+      {
+        "id": 2,
+        "name": "Poetry"
+      },
+      {
+        "id": 1,
+        "name": "SciFi"
+      }
+    ],
+    "postStatus": "ACTIVE"
+  }
+]
