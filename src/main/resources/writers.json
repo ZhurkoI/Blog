@@ -39,6 +39,19 @@
           }
         ],
         "postStatus": "UNDER_REVIEW"
+      },
+      {
+        "id": 14,
+        "content": "999 999 ",
+        "created": "Aug 18, 2022, 11:04:24 AM",
+        "updated": "Aug 18, 2022, 10:51:08 PM",
+        "labels": [
+          {
+            "id": 2,
+            "name": "Poetry"
+          }
+        ],
+        "postStatus": "ACTIVE"
       }
     ]
   }

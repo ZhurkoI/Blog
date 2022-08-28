@@ -1,10 +1,11 @@
-package org.zhurko.blog.repository;
+package org.zhurko.blog.repository.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import org.zhurko.blog.model.Post;
 import org.zhurko.blog.model.PostStatus;
+import org.zhurko.blog.repository.PostRepository;
 
 import java.io.FileReader;
 import java.io.FileWriter;

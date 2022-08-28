@@ -5,7 +5,10 @@ import java.util.Scanner;
 
 public class MainView {
 
-    private static final String NEW_LINE = System.lineSeparator();
+    private static final String MAIN_MENU = "1 - Manage Writers" + System.lineSeparator() +
+            "2 - Manage Posts" + System.lineSeparator() +
+            "3 - Manage Labels" + System.lineSeparator() +
+            "0 - Exit program";
 
     private final WriterView writerView = new WriterView();
     private final PostView postView = new PostView();
@@ -33,16 +36,12 @@ public class MainView {
     }
 
     private int getChoice() {
-        String mainMenu = "1 - Manage Writers" + NEW_LINE +
-                "2 - Manage Posts" + NEW_LINE +
-                "3 - Manage Labels" + NEW_LINE +
-                "0 - Exit program";
         int choice = -1;
 
         do {
             System.out.println();
             System.out.println("Main Menu:");
-            System.out.println(mainMenu);
+            System.out.println(MAIN_MENU);
             System.out.print("Please make a selection: ");
             try {
                 choice = scanner.nextInt();

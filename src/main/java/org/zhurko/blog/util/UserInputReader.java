@@ -9,14 +9,17 @@ public class UserInputReader {
     }
 
     public static Long readNumberInput() {
+        Scanner scanner = new Scanner(System.in);
         Long numberInput = -1L;
-        try {
-            Scanner scanner = new Scanner(System.in);
-            numberInput = scanner.nextLong();
-            scanner.nextLine();
-        } catch (InputMismatchException exception) {
-            System.out.println("Invalid selection. Numbers only please.");
-        }
+        do {
+            try {
+                numberInput = scanner.nextLong();
+                scanner.nextLine();
+            } catch (InputMismatchException exception) {
+                System.out.println("Invalid selection. Numbers only please.");
+                scanner.nextLine();
+            }
+        } while (numberInput < 0);
         return numberInput;
     }
 }

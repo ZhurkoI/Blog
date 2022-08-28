@@ -2,8 +2,8 @@ package org.zhurko.blog.controller;
 
 import org.zhurko.blog.model.Label;
 import org.zhurko.blog.model.Post;
-import org.zhurko.blog.repository.JsonLabelRepositoryImpl;
-import org.zhurko.blog.repository.JsonPostRepositoryImpl;
+import org.zhurko.blog.repository.json.JsonLabelRepositoryImpl;
+import org.zhurko.blog.repository.json.JsonPostRepositoryImpl;
 import org.zhurko.blog.repository.LabelRepository;
 import org.zhurko.blog.repository.PostRepository;
 
@@ -13,7 +13,6 @@ import java.util.Set;
 public class PostController {
 
     private final PostRepository postRepo = new JsonPostRepositoryImpl();
-    // TODO: Это нормально, когда в PostController создается labelRepo? Или нужно делать через labelController?
     private final LabelRepository labelRepo = new JsonLabelRepositoryImpl();
 
     public Post saveNewPost(String input) {

@@ -7,7 +7,6 @@ import org.zhurko.blog.model.Post;
 import org.zhurko.blog.util.UserInputReader;
 
 import java.util.Arrays;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -40,10 +39,10 @@ public class PostView {
                     createPost();
                     break;
                 case 2:
-                    getAllPosts();
+                    showAllPosts();
                     break;
                 case 3:
-                    getPostById();
+                    showPostById();
                     break;
                 case 4:
                     editPost();
@@ -72,7 +71,7 @@ public class PostView {
         Long numberInput = UserInputReader.readNumberInput();
         Post post = postController.getPostById(numberInput);
         if (post == null) {
-            System.out.println("Post with ID=" + numberInput + " doesn't exist.");
+            System.out.printf("Post with ID=%d doesn't exist.%n", numberInput);
             return;
         }
 
@@ -81,13 +80,13 @@ public class PostView {
             return;
         }
         System.out.println("List of labels assigned to the post:");
-        post.getLabels().forEach(l -> System.out.println("ID=" + l.getId() + " | " + l.getName()));
+        post.getLabels().forEach(l -> System.out.printf("ID=%d | %s%n", l.getId(), l.getName()));
 
         System.out.print("Enter ID of the label you want to remove: ");
         numberInput = UserInputReader.readNumberInput();
         Label label = labelController.getLabelById(numberInput);
         if (label == null) {
-            System.out.println("There is no label with ID=" + numberInput + " assigned to selected post.");
+            System.out.printf("There is no label with ID=%d assigned to selected post.%n", numberInput);
             return;
         }
 
@@ -101,18 +100,23 @@ public class PostView {
         Long numberInput = UserInputReader.readNumberInput();
         Post post = postController.getPostById(numberInput);
         if (post == null) {
-            System.out.println("Post with ID=" + numberInput + " doesn't exist.");
+            System.out.printf("Post with ID=%d doesn't exist.%n", numberInput);
             return;
         }
 
-        // TODO: Это нормально, когда в PostVew создается LabelController для взаимодействия с лейблами?
-        System.out.println("List of available labels:");
-        labelController.getAll().forEach(System.out::println);
+        List<Label> allLabels = labelController.getAll();
+        if (!allLabels.isEmpty()) {
+            System.out.println("List of available labels:");
+            allLabels.forEach(n -> System.out.printf("ID=%d | NAME: %s%n", n.getId(), n.getName()));
+        } else {
+            System.out.println("No labels exist.");
+        }
+
         System.out.print("Enter ID of the label: ");
-        numberInput = UserInputReader.readNumberInput();
-        Label label = labelController.getLabelById(numberInput);
+        Long id = UserInputReader.readNumberInput();
+        Label label = allLabels.stream().filter(l -> l.getId().equals(id)).findFirst().orElse(null);
         if (label == null) {
-            System.out.println("Label with ID=" + numberInput + " doesn't exist.");
+            System.out.printf("Label with ID=%d doesn't exist.%n", numberInput);
             return;
         }
 
@@ -126,18 +130,18 @@ public class PostView {
         Long numberInput = UserInputReader.readNumberInput();
         Post post = postController.getPostById(numberInput);
         if (post == null) {
-            System.out.println("Post with ID=" + numberInput + " doesn't exist.");
+            System.out.printf("Post with ID=%d doesn't exist.%n", numberInput);
             return;
         }
 
         System.out.print("Enter new content: ");
         String stringInput = scanner.nextLine();
         post = postController.updatePost(post.getId(), stringInput);
-        System.out.println("Post with ID=" + post.getId() + " has been updated. New post content: ");
+        System.out.printf("Post with ID=%d has been updated. New post content:%n", post.getId());
         printPosts(post);
     }
 
-    private void getPostById() {
+    private void showPostById() {
         System.out.print("Enter ID of the post: ");
         Long numberInput = UserInputReader.readNumberInput();
         Post post = postController.getPostById(numberInput);
@@ -145,11 +149,11 @@ public class PostView {
             System.out.println("Post found:");
             printPosts(post);
         } else {
-            System.out.println("Post with ID=" + numberInput + " doesn't exist.");
+            System.out.printf("Post with ID=%d doesn't exist.%n", numberInput);
         }
     }
 
-    private void getAllPosts() {
+    private void showAllPosts() {
         List<Post> allPosts = postController.getAll();
         if (!allPosts.isEmpty()) {
             System.out.println("List of available posts:");
@@ -174,21 +178,15 @@ public class PostView {
     }
 
     private int getChoice(String[] menuEntries) {
-        Scanner scanner = new Scanner(System.in);
-        int choice = -1;
+        Long choice;
         do {
             System.out.println();
             System.out.println("Post Menu:");
             Arrays.stream(menuEntries).forEach(System.out::println);
             System.out.print("Please make a selection: ");
-            try {
-                choice = scanner.nextInt();
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid selection. Numbers only please.");
-                scanner.next();
-            }
+            choice = UserInputReader.readNumberInput();
         } while (choice < 0 || choice > menuEntries.length);
-        return choice;
+        return choice.intValue();
     }
 
     private String getAssignedLabels(Post post) {
@@ -202,22 +200,13 @@ public class PostView {
     }
 
     private void printPosts(List<Post> posts) {
-        posts.forEach(p -> System.out.println("ID=" + p.getId() +
-                " | CREATED: " + p.getCreated() +
-                " | UPDATED: " + p.getUpdated() +
-                " | STATUS: " + p.getPostStatus() +
-                " | LABELS: " + getAssignedLabels(p) +
-                " | CONTENT: " + p.getContent()
-        ));
+        posts.forEach(p -> System.out.printf("ID=%d | CREATED: %s | UPDATED: %s | STATUS: %s | LABELS: %s | CONTENT: %s%n",
+                p.getId(), p.getCreated(), p.getUpdated(), p.getPostStatus(), getAssignedLabels(p), p.getContent()));
     }
 
     private void printPosts(Post post) {
-        System.out.println("ID=" + post.getId() +
-                " | CREATED: " + post.getCreated() +
-                " | UPDATED: " + post.getUpdated() +
-                " | STATUS: " + post.getPostStatus() +
-                " | LABELS: " + getAssignedLabels(post) +
-                " | CONTENT: " + post.getContent()
-        );
+        System.out.printf("ID=%d | CREATED: %s | UPDATED: %s | STATUS: %s | LABELS: %s | CONTENT: %s%n",
+                post.getId(), post.getCreated(), post.getUpdated(), post.getPostStatus(), getAssignedLabels(post),
+                post.getContent());
     }
 }

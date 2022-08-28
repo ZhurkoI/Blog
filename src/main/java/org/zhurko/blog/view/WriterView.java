@@ -41,10 +41,10 @@ public class WriterView {
                     createWriter();
                     break;
                 case 2:
-                    getAllWriters();
+                    showAllWriters();
                     break;
                 case 3:
-                    getWriterById();
+                    showWriterById();
                     break;
                 case 4:
                     editWriter();
@@ -76,7 +76,7 @@ public class WriterView {
         }
     }
 
-    private void getAllWriters() {
+    private void showAllWriters() {
         List<Writer> allWriters = writerController.getAll();
         if (!allWriters.isEmpty()) {
             System.out.println("List of writers:");
@@ -86,7 +86,7 @@ public class WriterView {
         }
     }
 
-    private void getWriterById() {
+    private void showWriterById() {
         System.out.print("Enter ID of the writer: ");
         Long numberInput = UserInputReader.readNumberInput();
         Writer writer = writerController.getWriterById(numberInput);
@@ -94,7 +94,7 @@ public class WriterView {
             System.out.println("Writer is:");
             printWriters(writer);
         } else {
-            System.out.println("Writer with ID=" + numberInput + " doesn't exist.");
+            System.out.printf("Writer with ID=%d doesn't exist.%n", numberInput);
         }
     }
 
@@ -103,7 +103,7 @@ public class WriterView {
         Long numberInput = UserInputReader.readNumberInput();
         Writer writer = writerController.getWriterById(numberInput);
         if (writer == null) {
-            System.out.println("Writer with ID=" + numberInput + " doesn't exist.");
+            System.out.printf("Writer with ID=%d doesn't exist.%n", numberInput);
             return;
         }
 
@@ -112,7 +112,7 @@ public class WriterView {
         System.out.print("Enter new writer's last name: ");
         String stringInput2 = scanner.nextLine();
         writer = writerController.updateWriter(writer.getId(), stringInput1, stringInput2);
-        System.out.println("Writer with ID=" + writer.getId() + " has been updated: ");
+        System.out.printf("Writer with ID=%d has been updated:%n", writer.getId());
         printWriters(writer);
     }
 
@@ -121,18 +121,24 @@ public class WriterView {
         Long numberInput = UserInputReader.readNumberInput();
         Writer writer = writerController.getWriterById(numberInput);
         if (writer == null) {
-            System.out.println("Writer with ID=" + numberInput + " doesn't exist.");
+            System.out.printf("Writer with ID=%d doesn't exist.%n", numberInput);
             return;
         }
 
-        System.out.println("List of available posts:");
-        postController.getAll().forEach(p -> System.out.println("ID=" + p.getId() + " | CONTENT: " + p.getContent()));
+        List<Post> allPosts = postController.getAll();
+        if (!allPosts.isEmpty()) {
+            System.out.println("List of available posts in the application:");
+            allPosts.forEach((p -> System.out.printf("ID=%d | CONTENT: %s%n", p.getId(), p.getContent())));
+        } else {
+            System.out.println("There are no labels in the application.");
+            return;
+        }
 
         System.out.print("Enter ID of the post: ");
-        numberInput = UserInputReader.readNumberInput();
-        Post post = postController.getPostById(numberInput);
+        Long id = UserInputReader.readNumberInput();
+        Post post = allPosts.stream().filter(p -> p.getId().equals(id)).findFirst().orElse(null);
         if (post == null) {
-            System.out.println("Post with ID=" + numberInput + " doesn't exist.");
+            System.out.printf("Post with ID=%d doesn't exist.%n", numberInput);
             return;
         }
 
@@ -146,7 +152,7 @@ public class WriterView {
         Long numberInput = UserInputReader.readNumberInput();
         Writer writer = writerController.getWriterById(numberInput);
         if (writer == null) {
-            System.out.println("Writer with ID=" + numberInput + " doesn't exist.");
+            System.out.printf("Writer with ID=%d doesn't exist.%n", numberInput);
             return;
         }
 
@@ -156,13 +162,13 @@ public class WriterView {
         }
 
         System.out.println("There are posts by selected writer:");
-        writer.getPosts().forEach(p -> System.out.println("ID=" + p.getId() + " | CONTENT: " + p.getContent()));
+        writer.getPosts().forEach(p -> System.out.printf("ID=%d | CONTENT: %s%n", p.getId(), p.getContent()));
 
         System.out.print("Enter ID of the post you want to remove: ");
         numberInput = UserInputReader.readNumberInput();
         Post post = postController.getPostById(numberInput);
         if (post == null) {
-            System.out.println("There is no post with ID=" + numberInput + ".");
+            System.out.printf("There is no post with ID=%d.%n", numberInput);
             return;
         }
 
@@ -207,17 +213,12 @@ public class WriterView {
     }
 
     private void printWriters(List<Writer> writers) {
-        writers.forEach(w -> System.out.println("ID=" + w.getId() +
-                " | FIRST NAME: " + w.getFirstName() +
-                " | LAST NAME: " + w.getLastName() +
-                " | POST ID: " + getRelatedPosts(w)));
+        writers.forEach(w -> System.out.printf("ID=%d | FIRST NAME: %s | LAST NAME: %s | POST ID: %s%n",
+                w.getId(), w.getFirstName(), w.getLastName(), getRelatedPosts(w)));
     }
 
     private void printWriters(Writer writer) {
-        System.out.println("ID=" + writer.getId() +
-                " | FIRST NAME: " + writer.getFirstName() +
-                " | LAST NAME: " + writer.getLastName() +
-                " | POST ID: " + getRelatedPosts(writer)
-        );
+        System.out.printf("ID=%d | FIRST NAME: %s | LAST NAME: %s | POST ID: %s%n",
+                writer.getId(), writer.getFirstName(), writer.getLastName(), getRelatedPosts(writer));
     }
 }

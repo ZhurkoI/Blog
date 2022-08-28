@@ -2,8 +2,8 @@ package org.zhurko.blog.controller;
 
 import org.zhurko.blog.model.Post;
 import org.zhurko.blog.model.Writer;
-import org.zhurko.blog.repository.JsonPostRepositoryImpl;
-import org.zhurko.blog.repository.JsonWriterRepositoryImpl;
+import org.zhurko.blog.repository.json.JsonPostRepositoryImpl;
+import org.zhurko.blog.repository.json.JsonWriterRepositoryImpl;
 import org.zhurko.blog.repository.PostRepository;
 import org.zhurko.blog.repository.WriterRepository;
 

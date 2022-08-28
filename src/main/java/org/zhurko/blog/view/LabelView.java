@@ -5,7 +5,6 @@ import org.zhurko.blog.model.Label;
 import org.zhurko.blog.util.UserInputReader;
 
 import java.util.Arrays;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -26,90 +25,105 @@ public class LabelView {
     public void runMenu() {
         while (true) {
             int choice = getChoice(LABEL_MENU);
-            String stringInput;
-            Long numberInput;
-            Label label;
 
             switch (choice) {
                 case 0:
                     return;
                 case 1:
-                    System.out.print("Enter name of the label: ");
-                    stringInput = scanner.nextLine();
-                    Label createdLabel = labelController.saveLabel(stringInput);
-
-                    if (createdLabel != null) {
-                        System.out.println("Label has been created: " + createdLabel);
-                    } else {
-                        System.out.println("Label '" + stringInput + "' has not been created.");
-                    }
+                    createLabel();
                     break;
                 case 2:
-                    List<Label> allLabels = labelController.getAll();
-                    if (!allLabels.isEmpty()) {
-                        System.out.println("List of available labels:");
-                        allLabels.forEach(n -> System.out.println("   * " + n));
-                    } else {
-                        System.out.println("No labels exist.");
-                    }
+                    showAllLabels();
                     break;
                 case 3:
-                    System.out.print("Enter name of the label: ");
-                    stringInput = scanner.nextLine();
-                    label = labelController.findLabelByName(stringInput);
-                    if (label != null) {
-                        System.out.println("Label exist: " + label);
-                    } else {
-                        System.out.println("Label '" + stringInput + "' doesn't exist.");
-                    }
+                    showLabelNyName();
                     break;
                 case 4:
-                    System.out.print("Enter label ID: ");
-                    numberInput = UserInputReader.readNumberInput();
-                    label = labelController.getLabelById(numberInput);
-                    if (label != null) {
-                        System.out.println("Label found: " + label);
-                    } else {
-                        System.out.println("Label with ID=" + numberInput + " doesn't exist.");
-                    }
+                    showLabelById();
                     break;
                 case 5:
-                    System.out.print("Enter name of the label you want to edit: ");
-                    stringInput = scanner.nextLine();
-                    label = labelController.findLabelByName(stringInput);
-                    if (label == null) {
-                        System.out.println("Label '" + stringInput + "' doesn't exist.");
-                        break;
-                    }
-                    System.out.print("Enter new name of the label: ");
-                    String stringInput2 = scanner.nextLine();
-                    label = labelController.updateLabel(stringInput, stringInput2);
-                    System.out.println("Label has been renamed. New name: " + label);
+                    editLabel();
                     break;
                 case 6:
-                    System.out.print("Enter ID of the label you want to remove: ");
-                    numberInput = UserInputReader.readNumberInput();
-                    labelController.deleteLabelById(numberInput);
+                    removeLabel();
                     break;
             }
         }
     }
 
+    private void createLabel() {
+        System.out.print("Enter name of the label: ");
+        String stringInput = scanner.nextLine();
+        Label createdLabel = labelController.saveLabel(stringInput);
+
+        if (createdLabel != null) {
+            System.out.printf("Label has been created: %s%n", createdLabel);
+        } else {
+            System.out.printf("Label '%s' has not been created.%n", stringInput);
+        }
+    }
+
+    private void showAllLabels() {
+        List<Label> allLabels = labelController.getAll();
+        if (!allLabels.isEmpty()) {
+            System.out.println("List of available labels:");
+            allLabels.forEach(n -> System.out.printf("ID=%d | NAME: %s%n", n.getId(), n.getName()));
+        } else {
+            System.out.println("No labels exist.");
+        }
+    }
+
+    private void showLabelNyName() {
+        System.out.print("Enter name of the label: ");
+        String stringInput = scanner.nextLine();
+        Label label = labelController.findLabelByName(stringInput);
+        if (label != null) {
+            System.out.printf("Label exist: %s%n", label);
+        } else {
+            System.out.printf("Label '%s' doesn't exist.%n", stringInput);
+        }
+    }
+
+    private void showLabelById() {
+        System.out.print("Enter label ID: ");
+        Long numberInput = UserInputReader.readNumberInput();
+        Label label = labelController.getLabelById(numberInput);
+        if (label != null) {
+            System.out.printf("Label found: %s%n", label);
+        } else {
+            System.out.printf("Label with ID=%d doesn't exist.%n", numberInput);
+        }
+    }
+
+    private void editLabel() {
+        System.out.print("Enter name of the label you want to edit: ");
+        String stringInput = scanner.nextLine();
+        Label label = labelController.findLabelByName(stringInput);
+        if (label == null) {
+            System.out.printf("Label '%s' doesn't exist.%n", stringInput);
+            return;
+        }
+        System.out.print("Enter new name of the label: ");
+        String stringInput2 = scanner.nextLine();
+        label = labelController.updateLabel(stringInput, stringInput2);
+        System.out.printf("Label has been renamed. New name: %s%n", label);
+    }
+
+    private void removeLabel() {
+        System.out.print("Enter ID of the label you want to remove: ");
+        Long numberInput = UserInputReader.readNumberInput();
+        labelController.deleteLabelById(numberInput);
+    }
+
     private int getChoice(String[] menuEntries) {
-        Scanner scanner = new Scanner(System.in);
-        int choice = -1;
+        Long choice = -1L;
         do {
             System.out.println();
             System.out.println("Label menu:");
             Arrays.stream(menuEntries).forEach(System.out::println);
             System.out.print("Please make a selection: ");
-            try {
-                choice = scanner.nextInt();
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid selection. Numbers only please.");
-                scanner.next();
-            }
+            choice = UserInputReader.readNumberInput();
         } while (choice < 0 || choice > menuEntries.length);
-        return choice;
+        return choice.intValue();
     }
 }

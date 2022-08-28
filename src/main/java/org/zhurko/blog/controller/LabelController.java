@@ -1,7 +1,7 @@
 package org.zhurko.blog.controller;
 
 import org.zhurko.blog.model.Label;
-import org.zhurko.blog.repository.JsonLabelRepositoryImpl;
+import org.zhurko.blog.repository.json.JsonLabelRepositoryImpl;
 import org.zhurko.blog.repository.LabelRepository;
 
 import java.util.List;
